@@ -30,8 +30,8 @@ export async function getLoggedUserCart() {
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "GET",
     headers: {
-      // token: token as string,
-      Authorization: `Bearer ${token}`,
+      token: token as string,
+      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   });

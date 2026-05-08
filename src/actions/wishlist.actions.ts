@@ -32,8 +32,8 @@ export async function getLoggedUserWishlist() {
   const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
     method: "GET",
     headers: {
-      // token: token as string,
-      Authorization: `Bearer ${token}`,
+      token: token as string,
+      // Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   });
