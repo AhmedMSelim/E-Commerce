@@ -13,10 +13,9 @@ export async function getMyToken() {
 
     if (!myToken) return null;
 
-    // فك التشفير مع التمرير الصريح للـ secret المعتمد
     const decoded = await decode({
       token: myToken,
-      secret: process.env.NEXTAUTH_SECRET!,
+      secret: process.env.NEXTAUTH_SECRET || "",
     });
 
     return decoded?.token || decoded?.rawToken || myToken;
