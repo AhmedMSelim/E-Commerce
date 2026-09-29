@@ -13,12 +13,24 @@ export async function getMyToken() {
 
     if (!myToken) return null;
 
+    const secret = process.env.NEXTAUTH_SECRET || "";
+
+    if (!secret) {
+      return myToken;
+    }
+
     const decoded = await decode({
       token: myToken,
-      secret: process.env.NEXTAUTH_SECRET || "",
+      secret: secret,
     });
 
-    return decoded?.token || decoded?.rawToken || myToken;
+    if (decoded && typeof decoded === "object") {
+      return (
+        (decoded.token as string) || (decoded.rawToken as string) || myToken
+      );
+    }
+
+    return myToken;
   } catch (error) {
     console.error("JWT Decryption Error:", error);
     return null;
