@@ -38,6 +38,7 @@ export default function Login() {
       callbackUrl: "/",
     });
     if (response?.ok) {
+      console.log("response", response);
       toast.success("Welcome Login Successfully! ❤️", {
         duration: 7000,
         position: "top-center",
