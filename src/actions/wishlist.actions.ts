@@ -6,9 +6,7 @@ import { getMyToken } from "@/utilities";
 export async function addToWishlist(productId: string) {
   try {
     const token = await getMyToken();
-    if (!token) {
-      throw new Error("Please Login Frist");
-    }
+    if (!token) return { success: false, error: "Login First" };
     const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
       method: "POST",
       headers: {
@@ -26,9 +24,7 @@ export async function addToWishlist(productId: string) {
 
 export async function getLoggedUserWishlist() {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login Frist");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
     method: "GET",
     headers: {
@@ -43,9 +39,7 @@ export async function getLoggedUserWishlist() {
 
 export async function removeproductfromwishlist(productId: string) {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login First"); // تصحيح إملائي من Frist إلى First
-  }
+  if (!token) return { success: false, error: "Login First" };
 
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, // استخدام المتغير productId بدلاً من القيمة الثابتة

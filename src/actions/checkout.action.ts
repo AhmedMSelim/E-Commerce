@@ -9,9 +9,7 @@ export async function onlinePayment(
   formValues: checkoutSchemaType,
 ) {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("You must be logged in to proceed with the payment.");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${productId}?url=${url}`,
 

@@ -4,10 +4,7 @@ import { getMyToken } from "@/utilities";
 export async function addToCart(productId: string) {
   try {
     const token = await getMyToken();
-    console.log("tokennnnnnnn", token);
-    if (!token) {
-      throw new Error("Please Login Frist");
-    }
+    if (!token) return { success: false, error: "Login First" };
     const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
       method: "POST",
       headers: {
@@ -25,9 +22,7 @@ export async function addToCart(productId: string) {
 
 export async function getLoggedUserCart() {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login Frist");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "GET",
     headers: {
@@ -44,9 +39,7 @@ export async function updateCartProductQuantity(
   count: number,
 ) {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login Frist");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
     {
@@ -63,9 +56,7 @@ export async function updateCartProductQuantity(
 }
 export async function removeProductFromCart(productId: string) {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login Frist");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
     {
@@ -82,9 +73,7 @@ export async function removeProductFromCart(productId: string) {
 }
 export async function clearUserCart() {
   const token = await getMyToken();
-  if (!token) {
-    throw new Error("Please Login Frist");
-  }
+  if (!token) return { success: false, error: "Login First" };
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "DELETE",
     headers: {
