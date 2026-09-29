@@ -82,9 +82,12 @@ export const authOptions: NextAuthOptions = {
     jwt(param) {
       // console.log("jwt ppppppppppppp", param);
       if (param.user) {
-        param.token.routeToken = param.user.accessToken;
-        param.token.id = param.user.id;
-      }
+  // استخدام token بدلاً من accessToken
+  const userApiToken = (param.user as any).token || (param.user as any).accessToken;
+  param.token.routeToken = userApiToken;
+  param.token.token = userApiToken;
+  param.token.id = param.user.id;
+}
       return param.token;
     },
 
