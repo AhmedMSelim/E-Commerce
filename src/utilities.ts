@@ -15,9 +15,7 @@ export async function getMyToken() {
 
     const secret = process.env.NEXTAUTH_SECRET || "";
 
-    if (!secret) {
-      return myToken;
-    }
+    if (!secret) return myToken;
 
     const decoded = await decode({
       token: myToken,
@@ -25,9 +23,7 @@ export async function getMyToken() {
     });
 
     if (decoded && typeof decoded === "object") {
-      return (
-        (decoded.token as string) || (decoded.rawToken as string) || myToken
-      );
+      return (decoded.token as string) || (decoded.rawToken as string) || myToken;
     }
 
     return myToken;

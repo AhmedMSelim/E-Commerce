@@ -4,6 +4,7 @@ import { getMyToken } from "@/utilities";
 export async function addToCart(productId: string) {
   try {
     const token = await getMyToken();
+    console.log("tokennnnnnnn", token);
     if (!token) {
       throw new Error("Please Login Frist");
     }
