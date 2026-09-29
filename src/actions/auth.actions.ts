@@ -35,8 +35,8 @@ export async function UserLogin(data: LoginSchemaType) {
   if (res.ok) {
     const cookie = await cookies();
     cookie.set("userToken", result.token, {
-      httpOnly: true,
-      secure: true,
+      // httpOnly: true,
+      // secure: true,
       // maxAge: 60 * 60 * 24,
     });
   }
