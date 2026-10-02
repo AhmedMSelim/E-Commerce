@@ -1,13 +1,10 @@
-import { decode } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
 export async function getMyToken() {
   const cookie = await cookies();
-  const myToken = cookie.get("next-auth.session-token")?.value;
-  const decodedToken = await decode({
-    token: myToken,
-    secret: process.env.NEXTAUTH_SECRET!,
-  });
-  const token = decodedToken?.routeToken;
+  // قراءة التوكن مباشرة كـ Plain Text من الـ Cookies
+  const token =
+    cookie.get("token")?.value || cookie.get("next-auth.session-token")?.value;
+
   return token;
 }

@@ -31,11 +31,10 @@ export async function UserLogin(data: LoginSchemaType) {
   );
 
   const result = await res.json();
-  console.log("result from api", result);
   if (res.ok) {
     const cookie = await cookies();
     cookie.set("userToken", result.token, {
-      // httpOnly: true,
+      httpOnly: true,
       // secure: true,
       // maxAge: 60 * 60 * 24,
     });
