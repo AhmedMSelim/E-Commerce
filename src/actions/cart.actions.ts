@@ -5,7 +5,11 @@ export async function addToCart(productId: string) {
   try {
     const token = await getMyToken();
     if (!token) {
-      throw new Error("Login First");
+      return {
+        status: "error",
+        message: "Login First",
+        data: null,
+      };
     }
     const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
       method: "POST",
