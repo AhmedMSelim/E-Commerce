@@ -39,7 +39,9 @@ export async function getLoggedUserWishlist() {
 
 export async function removeproductfromwishlist(productId: string) {
   const token = await getMyToken();
-  if (!token) return { success: false, error: "Login First" };
+  if (!token) {
+    throw new Error("Login First");
+  }
 
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, // استخدام المتغير productId بدلاً من القيمة الثابتة

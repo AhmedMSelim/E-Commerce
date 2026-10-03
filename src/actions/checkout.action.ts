@@ -9,7 +9,9 @@ export async function onlinePayment(
   formValues: checkoutSchemaType,
 ) {
   const token = await getMyToken();
-  if (!token) return { success: false, error: "Login First" };
+  if (!token) {
+    throw new Error("Login First");
+  }
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${productId}?url=${url}`,
 
