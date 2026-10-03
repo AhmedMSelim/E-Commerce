@@ -8,6 +8,10 @@ declare module "next-auth" {
     accessToken?: string;
     id?: string;
   }
+  interface Session {
+    id?: string;
+    routeToken?: string;
+  }
 }
 
 declare module "next-auth/jwt" {
@@ -16,34 +20,20 @@ declare module "next-auth/jwt" {
     id?: string;
   }
 }
+
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   providers: [
-    // Way to Login With Email & Passwod
     Credentials({
-      // Button Name
       name: "myLogin",
-
-      // Input
       credentials: {
-        email: {
-          Label: "email",
-          type: "email",
-          placeholder: "example@example.com",
-        },
-        password: {
-          Label: "password",
-          type: "password",
-          placeholder: "***********",
-        },
+        email: { label: "email", type: "email" },
+        password: { label: "password", type: "password" },
       },
-
-      // function to call api ==> when click on button
-      async authorize(credentials, req) {
-        // excute when call api
-        //get form values
-        // on success ==> return object user data
-        // on erorr ==> null / false / erorr
-
+      async authorize(credentials) {
         try {
           const res = await fetch(
             `https://ecommerce.routemisr.com/api/v1/auth/signin`,
@@ -58,9 +48,7 @@ export const authOptions: NextAuthOptions = {
           );
 
           const result = await res.json();
-          if (!res.ok) {
-            throw new Error(result.message || "Invalid Login");
-          }
+          if (!res.ok) throw new Error(result.message);
 
           const jwt: { id: string } = jwtDecode(result.token);
 
@@ -71,39 +59,26 @@ export const authOptions: NextAuthOptions = {
             accessToken: result.token,
           };
         } catch (err) {
-          console.log("erorr from api", err);
-          throw new Error((err as Error).message || "Invalid Login");
+          throw new Error((err as Error).message);
         }
       },
     }),
   ],
-  // callbacks ===> will be excute after successfully login | user - refresh
   callbacks: {
-    jwt(param) {
-      // console.log("jwt ppppppppppppp", param);
-      if (param.user) {
-        // استخدام token بدلاً من accessToken
-        const userApiToken =
-          (param.user as any).token || (param.user as any).accessToken;
-        param.token.routeToken = userApiToken;
-        param.token.token = userApiToken;
-        param.token.id = param.user.id;
+    jwt({ token, user }) {
+      if (user) {
+        // هنا كان الغلط
+        token.routeToken = user.accessToken;
+        token.id = user.id;
       }
-      return param.token;
+      return token;
     },
-
-    //
-    //
     session({ token, session }) {
-      if (token.id) {
-        session.id = token.id;
-      }
-      // param.session.token = param.token.routeToken;
-
+      if (token.id) session.id = token.id;
+      if (token.routeToken) session.routeToken = token.routeToken;
       return session;
     },
   },
-
   pages: {
     signIn: "/login",
   },
