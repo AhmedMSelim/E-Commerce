@@ -10,7 +10,11 @@ export async function onlinePayment(
 ) {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${productId}?url=${url}`,

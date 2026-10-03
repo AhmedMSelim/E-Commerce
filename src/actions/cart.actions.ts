@@ -29,7 +29,11 @@ export async function addToCart(productId: string) {
 export async function getLoggedUserCart() {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "GET",
@@ -48,7 +52,11 @@ export async function updateCartProductQuantity(
 ) {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
@@ -67,7 +75,11 @@ export async function updateCartProductQuantity(
 export async function removeProductFromCart(productId: string) {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
@@ -86,7 +98,11 @@ export async function removeProductFromCart(productId: string) {
 export async function clearUserCart() {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(`https://ecommerce.routemisr.com/api/v2/cart`, {
     method: "DELETE",

@@ -7,7 +7,11 @@ export async function addToWishlist(productId: string) {
   try {
     const token = await getMyToken();
     if (!token) {
-      throw new Error("Login First");
+      return {
+        status: "error",
+        message: "Login First",
+        data: null,
+      };
     }
     const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
       method: "POST",
@@ -27,7 +31,11 @@ export async function addToWishlist(productId: string) {
 export async function getLoggedUserWishlist() {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
   const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
     method: "GET",
@@ -44,7 +52,11 @@ export async function getLoggedUserWishlist() {
 export async function removeproductfromwishlist(productId: string) {
   const token = await getMyToken();
   if (!token) {
-    throw new Error("Login First");
+    return {
+      status: "error",
+      message: "Login First",
+      data: null,
+    };
   }
 
   const res = await fetch(
