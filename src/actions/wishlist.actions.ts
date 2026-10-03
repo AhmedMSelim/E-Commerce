@@ -24,7 +24,7 @@ export async function addToWishlist(productId: string) {
 
 export async function getLoggedUserWishlist() {
   const token = await getMyToken();
-  if (!token) return { error: "Login First" };
+  if (!token) return "Login First";
   const res = await fetch(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
     method: "GET",
     headers: {
