@@ -3,24 +3,6 @@ import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { jwtDecode } from "jwt-decode";
 
-declare module "next-auth" {
-  interface User {
-    accessToken?: string;
-    id?: string;
-  }
-  interface Session {
-    id?: string;
-    routeToken?: string;
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    routeToken?: string;
-    id?: string;
-  }
-}
-
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
@@ -44,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                 password: credentials?.password,
               }),
               headers: { "content-type": "application/json" },
-            },
+            }
           );
 
           const result = await res.json();
@@ -67,7 +49,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        // هنا كان الغلط
         token.routeToken = user.accessToken;
         token.id = user.id;
       }
