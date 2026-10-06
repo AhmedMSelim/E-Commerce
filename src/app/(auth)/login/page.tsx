@@ -43,7 +43,9 @@ export default function Login() {
         duration: 7000,
         position: "top-center",
       });
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } else {
       toast.error(response?.ok || "Can't Login Something went wrong! 👎", {
         duration: 3000,
