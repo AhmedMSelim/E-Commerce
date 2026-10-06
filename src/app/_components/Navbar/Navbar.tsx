@@ -336,7 +336,7 @@ const Header = () => {
                     className="text-green-600 group-hover:text-green-600 transition-colors"
                   />
                 </Link>
-                <span className="text-black font-bold">Cat</span>
+                <span className="text-black font-bold">Cart</span>
               </div>
             </div>
             {status === "unauthenticated" ? (
